@@ -77,7 +77,7 @@ texLoader.load('bubble.png', (texture) => {
     });
 
     for (let i = 0; i < MAX_BUBBLES; i++) {
-        spawnBubble(200); 
+        spawnBubble(-2); 
     }
 });
 
@@ -88,7 +88,7 @@ function spawnBubble(position) {
 
     bubble.position.x = (Math.random() - 0.5) * 0.1; 
     bubble.position.z = (Math.random() - 0.5) * 0.1; 
-    bubble.position.y = -1; 
+    bubble.position.y = position; 
     bubble.scale.set(0.3,0.3,0.3)
 
     bubble.scale.set(0, 0, 0);
@@ -113,7 +113,7 @@ function popBubble(bubble, index) {
     bubble.geometry.dispose();
     bubbles.splice(index, 1);
     
-    spawnBubble(-3);
+    spawnBubble(-2);
 }
 
 const clock = new THREE.Clock()
