@@ -67,6 +67,10 @@ let bubbleGeometry = new THREE.SphereGeometry(0.15, 16, 16);
 
 const mixer = new THREE.AnimationMixer(tank.scene)
 
+const bubblePosition1 = {
+    x: 0, y: -2, z: 0
+}
+
 texLoader.load('bubble.png', (texture) => {
     bubbleMaterial = new THREE.MeshPhysicalMaterial({
         roughness: 0,
@@ -77,28 +81,28 @@ texLoader.load('bubble.png', (texture) => {
     });
 
     for (let i = 0; i < MAX_BUBBLES; i++) {
-        spawnBubble(-2); 
+        spawnBubble(bubblePosition1.x, bubblePosition1.y, bubblePosition1.z); 
     }
 });
 
-function spawnBubble(position) {
+function spawnBubble(positionX, positionY, positionZ) {
     if (!bubbleMaterial) return;
 
     const bubble = new THREE.Mesh(bubbleGeometry, bubbleMaterial);
 
-    bubble.position.x = (Math.random() - 0.5) * 0.1; 
-    bubble.position.z = (Math.random() - 0.5) * 0.1; 
-    bubble.position.y = position; 
+    bubble.position.x = positionX + (Math.random() * 0.1); 
+    bubble.position.z = positionZ + (Math.random() * 0.1); 
+    bubble.position.y = positionY; 
     bubble.scale.set(0.3,0.3,0.3)
 
     bubble.scale.set(0, 0, 0);
 
     bubble.userData = {
         speedY: Math.random() * 1.5 + 1.0,   
-        wobbleSpeed: Math.random() * 3 + 2,     
-        wobbleScale: Math.random() * 0.002 + 0.01,
-        wobbleXOffset: Math.random() * 100,     
-        wobbleZOffset: Math.random() * 100,
+        wobbleSpeed: Math.random() + 2,     
+        wobbleScale: Math.random() * 0.002,
+        wobbleXOffset: Math.random() * 10,     
+        wobbleZOffset: Math.random() * 10,
         targetScale: Math.random() * 0.005 + 0.4, 
         growthSpeed: Math.random() * 2 + 1,     
         popHeight: 0.001
@@ -113,7 +117,7 @@ function popBubble(bubble, index) {
     bubble.geometry.dispose();
     bubbles.splice(index, 1);
     
-    spawnBubble(-2);
+    spawnBubble(bubblePosition1.x, bubblePosition1.y, bubblePosition1.z);
 }
 
 const clock = new THREE.Clock()
